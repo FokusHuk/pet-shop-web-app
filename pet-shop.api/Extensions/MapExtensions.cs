@@ -18,5 +18,42 @@ namespace pet_shop.api.Extensions
                 Price = pet.Price
             });
         }
+
+        public static GetPetsResponseItem Map(this Pet pet)
+        {
+            return new GetPetsResponseItem()
+            {
+                Id = pet.Id,
+                Name = pet.Name,
+                Description = pet.Description,
+                Price = pet.Price
+            };
+        }
+
+        public static PetDto Map(this PostPetRequest petRequest)
+        {
+            return new PetDto(
+                petRequest.Name, 
+                petRequest.Description, 
+                petRequest.Price);
+        }
+
+        public static DeletePetResponse Map(this PetDto petDto)
+        {
+            return new DeletePetResponse()
+            {
+                Name = petDto.Name,
+                Description = petDto.Description,
+                Price = petDto.Price
+            };
+        }
+
+        public static PetDto Map(this PutPetRequest petRequest)
+        {
+            return new PetDto(
+                petRequest.Name, 
+                petRequest.Description, 
+                petRequest.Price);
+        }
     }
 }

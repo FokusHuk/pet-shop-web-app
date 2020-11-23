@@ -26,8 +26,8 @@ namespace pet_shop.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPetsRepository, PetsRepository>();
-            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddSingleton<IPetsRepository, PetsRepository>();
+            services.AddSingleton<ICartRepository, CartRepository>();
             
             services.AddControllers();
         }

@@ -5,12 +5,20 @@ namespace pet_shop.api.Domain
 {
     public class Pet
     {
-        public Pet(Guid id, string name, string description, double price)
+        public Pet(string name, string description, double price)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Price = price;
+        }
+
+        public Pet(PetDto petDto)
+        {
+            Id = Guid.NewGuid();
+            Name = petDto.Name;
+            Description = petDto.Description;
+            Price = petDto.Price;
         }
 
         public void Update(PetDto petDto)

@@ -8,6 +8,13 @@
             Description = description;
             Price = price;
         }
+
+        public PetDto(Pet pet)
+        {
+            Name = pet.Name;
+            Description = pet.Description;
+            Price = pet.Price;
+        }
         
         public string Name { get; set; }
         public string Description { get; set; }
