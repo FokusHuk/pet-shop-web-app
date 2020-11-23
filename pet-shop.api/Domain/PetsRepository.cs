@@ -6,14 +6,14 @@ namespace pet_shop.api.Domain
 {
     public class PetsRepository: IPetsRepository
     {
-        public IEnumerable<Pet> GetPets()
+        public IEnumerable<PetDto> GetPets()
         {
-            return _pets.Select(petInDict => petInDict.Value);
+            return _pets.Select(petInDict => new PetDto(petInDict.Value));
         }
 
-        public Pet GetPet(Guid petId)
+        public PetDto GetPet(Guid petId)
         {
-            return _pets[petId];
+            return new PetDto(_pets[petId]);
         }
 
         public Guid AddPet(PetDto petDto)
@@ -30,10 +30,9 @@ namespace pet_shop.api.Domain
             return new PetDto(removedPet);
         }
 
-        public Pet UpdatePet(Guid petId, PetDto petDto)
+        public void UpdatePet(PetDto petDto)
         {
-            _pets[petId].Update(petDto);
-            return _pets[petId];
+            _pets[petDto.Id].Update(petDto);
         }
 
         private readonly Dictionary<Guid, Pet> _pets = new Dictionary<Guid, Pet>();

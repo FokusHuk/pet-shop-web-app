@@ -20,8 +20,7 @@ namespace pet_shop.api.Controllers
         public IActionResult GetPets()
         {
             var pets = _petsRepository.GetPets();
-            var petModels = pets.Map();
-            return Ok(petModels);
+            return Ok(pets);
         }
 
         [HttpGet]
@@ -29,12 +28,11 @@ namespace pet_shop.api.Controllers
         public IActionResult GetPet([FromRoute] Guid petId)
         {
             var pet = _petsRepository.GetPet(petId);
-            var petModel = pet.Map();
-            return Ok(petModel);
+            return Ok(pet);
         }
 
         [HttpPost]
-        public IActionResult PostPet([FromBody] PostPetRequest request)
+        public IActionResult PostPet([FromBody] GeneralPetRequest request)
         {
             var newPet = request.Map();
             var petId = _petsRepository.AddPet(newPet);
@@ -48,17 +46,17 @@ namespace pet_shop.api.Controllers
         {
             var pet = _petsRepository.RemovePet(petId);
             var response = pet.Map();
-            return Ok();
+            return Ok(response);
         }
         
         [HttpPut]
         [Route("{petId}")]
-        public IActionResult UpdatePet([FromRoute] Guid petId, [FromBody] PutPetRequest request)
+        public IActionResult UpdatePet([FromRoute] Guid petId, [FromBody] GeneralPetRequest request)
         {
             var petDto = request.Map();
-            var pet = _petsRepository.UpdatePet(petId, petDto);
-            var response = pet.Map();
-            return Ok(response);
+            petDto.Id = petId;
+            _petsRepository.UpdatePet(petDto);
+            return Ok();
         }
 
         private readonly IPetsRepository _petsRepository;

@@ -1,6 +1,6 @@
 ﻿namespace pet_shop.api.Models
 {
-    public class PostPetRequest
+    public class GeneralPetRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
