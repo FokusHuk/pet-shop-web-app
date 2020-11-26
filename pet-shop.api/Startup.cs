@@ -26,8 +26,14 @@ namespace pet_shop.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            }));
+            
             services.AddSingleton<IPetsRepository, PetsRepository>();
             services.AddSingleton<ICartRepository, CartRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             
             services.AddControllers();
         }
@@ -39,6 +45,13 @@ namespace pet_shop.api
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+            );
 
             app.UseRouting();
 

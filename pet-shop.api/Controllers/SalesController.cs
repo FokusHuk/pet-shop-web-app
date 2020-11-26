@@ -10,17 +10,19 @@ namespace pet_shop.api.Controllers
     [GlobalExceptionFilter]
     public class SalesController: ControllerBase
     {
-        public SalesController(IPetsRepository petsRepository, ICartRepository cartRepository)
+        public SalesController(IPetsRepository petsRepository, ICartRepository cartRepository, IUserRepository userRepository)
         {
             _petsRepository = petsRepository;
             _cartRepository = cartRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         [Route("balance")]
         public IActionResult GetBalance()
         {
-            var response = new {Balance = _balance};
+            var balance = _userRepository.GetUserBalance();
+            var response = new {Balance = balance};
             return Ok(response);
         }
 
@@ -43,9 +45,10 @@ namespace pet_shop.api.Controllers
             var totalCost = items
                 .Select(item => _petsRepository.GetPet(item).Price)
                 .Sum(price => price);
-            if (_balance < totalCost)
+            var balance = _userRepository.GetUserBalance();
+            if (balance < totalCost)
             {
-                throw new Exception($"Недостаточно средств для покупки. Баланс: {_balance}. Стоимость: {totalCost}.");
+                throw new Exception($"Недостаточно средств для покупки. Баланс: {balance}. Стоимость: {totalCost}.");
             }
 
             foreach (var item in items)
@@ -55,15 +58,17 @@ namespace pet_shop.api.Controllers
             
             _cartRepository.RemoveAllItems();
 
-            _balance -= totalCost;
+            balance -= totalCost;
+            
+            _userRepository.ChangeUserBalance(balance);
 
-            var response = new {Balance = _balance};
+            var response = new {Balance = balance};
             
             return Ok(response);
         }
 
         private readonly IPetsRepository _petsRepository;
         private readonly ICartRepository _cartRepository;
-        private double _balance = 10000;
+        private readonly IUserRepository _userRepository;
     }
 }

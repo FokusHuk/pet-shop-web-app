@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using pet_shop.api.Domain;
 using pet_shop.api.Extensions;
@@ -11,15 +12,17 @@ namespace pet_shop.api.Controllers
     [GlobalExceptionFilter]
     public class PetsController: ControllerBase
     {
-        public PetsController(IPetsRepository petsRepository)
+        public PetsController(IPetsRepository petsRepository, ICartRepository cartRepository)
         {
             _petsRepository = petsRepository;
+            _cartRepository = cartRepository;
         }
 
         [HttpGet]
         public IActionResult GetPets()
         {
-            var pets = _petsRepository.GetPets();
+            var petsInCart = _cartRepository.GetItems();
+            var pets = _petsRepository.GetPets().Where(pet => !petsInCart.Contains(pet.Id));
             return Ok(pets);
         }
 
@@ -60,5 +63,6 @@ namespace pet_shop.api.Controllers
         }
 
         private readonly IPetsRepository _petsRepository;
+        private readonly ICartRepository _cartRepository;
     }
 }
