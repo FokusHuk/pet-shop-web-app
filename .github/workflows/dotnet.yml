@@ -39,8 +39,8 @@ jobs:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:push -a ${{ secrets.HEROKU_APPLICATION_NAME }} web 
     - name: Release
-      working-directory: ./pet-shop-webappp/
+      working-directory: ./pet-shop-webapp/
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: ls
+      run: heroku container:release -a ${{ secrets.HEROKU_APPLICATION_NAME }} web
       
