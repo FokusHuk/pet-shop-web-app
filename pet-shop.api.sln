@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pet-shop.api", "pet-shop.api\pet-shop.api.csproj", "{CB9E09CC-F05C-4332-8C11-B30CDB35E3B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pet-shop-webapp", "pet-shop-webapp\pet-shop-webapp.csproj", "{CB9E09CC-F05C-4332-8C11-B30CDB35E3B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F843868A-3525-4901-9FE9-4F0ED80DC53E}"
 EndProject
