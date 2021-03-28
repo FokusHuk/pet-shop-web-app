@@ -42,8 +42,16 @@ namespace pet_shop.api.Domain
 
         private void LoadTestData()
         {
-            var testPet = new Pet("Test pet", @"For CI/CD testing", 1000);
-            _pets.Add(testPet.Id, testPet);
+            var pet1 = new Pet("Cat", "White and fluffy", 1200);
+            var pet2 = new Pet("Dog", "Black and kind", 1000);
+            var pet3 = new Pet("Turtle", "Small, cute and brown-green", 3400);
+            var pet4 = new Pet("Parrot", "Funny and silly", 2500);
+            var pet5 = new Pet("Fish", "Silent and strange", 800);
+            _pets.Add(pet1.Id, pet1);
+            _pets.Add(pet2.Id, pet2);
+            _pets.Add(pet3.Id, pet3);
+            _pets.Add(pet4.Id, pet4);
+            _pets.Add(pet5.Id, pet5);
         }
 
         private readonly Dictionary<Guid, Pet> _pets = new Dictionary<Guid, Pet>();
